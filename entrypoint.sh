@@ -30,7 +30,7 @@ LunaSA Client = {
    ReceiveTimeout = 20000;
    SSLConfigFile = /usr/safenet/lunaclient/bin/openssl.cnf;
    ClientPrivKeyFile = /usr/safenet/lunaclient/cert/client/${HOSTNAME}Key.pem;
-   ClientCertFile = /usr/safenet/lunaclient/cert/client/${HOSTNAME}Cert.pem;
+   ClientCertFile = /usr/safenet/lunaclient/cert/client/${HOSTNAME}.pem;
    ServerCAFile = /usr/safenet/lunaclient/cert/server/CAFile.pem;
    NetClient = 1;
 EOF
@@ -49,10 +49,28 @@ cat>>/etc/Chrystoki.conf<<EOF
 }
 EOF
 
+export PATH=/usr/safenet/lunaclient/bin:$PATH
+
 if [ ! -f "${SAFENET}/cert/client/${HOSTNAME}.pem" -o ! -f "${SAFENET}/cert/client/${HOSTNAME}Key.pem" ]; then
    vtl createCert -n ${HOSTNAME}
 fi
 
-export PATH=/usr/safenet/lunaclient/bin:$PATH
+if [ "x${PYELEVEN_ARGS}" = "x" ]; then
+   PYELEVEN_ARGS="-w5"
+fi
 
-exec $*
+if [ "x${PYELEVEN_PORT}" = "x" ]; then
+   PYELEVEN_PORT="8000"
+fi
+
+if [ $# -eq 0 ]; then
+   cat>/config.py<<EOF
+DEBUG = True
+PKCS11MODULE = "/usr/safenet/lunaclient/lib/libCryptoki2_64.so"
+PKCS11PIN = "${PKCS11PIN}"
+EOF
+   exec gunicorn -b "0.0.0.0:${PYELEVEN_PORT}" "${PYELEVEN_ARGS}" pyeleven:app
+else
+   cd /tmp
+   exec $*
+fi

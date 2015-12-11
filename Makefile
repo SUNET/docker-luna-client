@@ -1,5 +1,5 @@
 VER=latest
-NAME=luna-xmlsec
+NAME=luna-client
 
 all: build push
 build:
