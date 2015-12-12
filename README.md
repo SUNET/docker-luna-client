@@ -40,7 +40,7 @@ The following Luna SA Slots/Partitions were found:
 
 Slot    Serial #        Label
 ====    ========        =====
- 1      999999999	example
+ 1      999999999       example
 
 ```
 
