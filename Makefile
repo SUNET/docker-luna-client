@@ -1,12 +1,12 @@
-VER=latest
+VERSION=latest
 NAME=luna-client
 
 all: build push
 build:
-	docker build --no-cache=true -t $(NAME) .
-	docker tag -f $(NAME) docker.sunet.se/$(NAME):$(VER)
+	docker build --no-cache=true -t $(NAME):$(VERSION) .
+	docker tag -f $(NAME):$(VERSION) docker.sunet.se/$(NAME):$(VERSION)
 update:
-	docker build -t $(NAME) .
-	docker tag -f $(NAME) docker.sunet.se/$(NAME):$(VER)
+	docker build -t $(NAME):$(VERSION) .
+	docker tag -f $(NAME):$(VERSION) docker.sunet.se/$(NAME):$(VERSION)
 push:
-	docker push docker.sunet.se/$(NAME):$(VER)
+	docker push docker.sunet.se/$(NAME):$(VERSION)
