@@ -31,10 +31,11 @@ LunaSA Client = {
    SSLConfigFile = /usr/safenet/lunaclient/bin/openssl.cnf;
    ClientPrivKeyFile = /usr/safenet/lunaclient/cert/client/${HOSTNAME}Key.pem;
    ClientCertFile = /usr/safenet/lunaclient/cert/client/${HOSTNAME}.pem;
-   ServerCAFile = /usr/safenet/lunaclient/cert/server/CAFile.pem;
+   ServerCAFile = /tmp/CAFile.pem;
    NetClient = 1;
 EOF
 N=0
+rm -f /tmp/CAFile.pem
 for cert in `find ${SAFENET}/cert/server -name \*Cert.pem`; do
    hsm=`basename $cert Cert.pem`
    NN=`printf "%02d" $N`
@@ -42,6 +43,7 @@ cat>>/etc/Chrystoki.conf<<EOF
    ServerName${NN} = ${hsm};
    ServerPort${NN} = 1792;
    ServerHtl${NN} = 0;
+   cat $cert >> /tmp/CAFile.pem
 EOF
    N=`expr ${N} + 1`
 done
