@@ -43,9 +43,9 @@ cat>>/etc/Chrystoki.conf<<EOF
    ServerName${NN} = ${hsm};
    ServerPort${NN} = 1792;
    ServerHtl${NN} = 0;
-   cat $cert >> /tmp/CAFile.pem
 EOF
    N=`expr ${N} + 1`
+   cat $cert >> /tmp/CAFile.pem
 done
 cat>>/etc/Chrystoki.conf<<EOF
 }
@@ -63,6 +63,10 @@ fi
 
 if [ "x${PYELEVEN_PORT}" = "x" ]; then
    PYELEVEN_PORT="8000"
+fi
+
+if [ "x${HTLC_ENABLED}" = "xyes" -o "x${HTLC_ENABLED}" = "x1" ]; then
+   service htlc_service start
 fi
 
 if [ $# -eq 0 ]; then
