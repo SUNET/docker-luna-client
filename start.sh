@@ -25,7 +25,7 @@ if [ ! -d "${var_dir}/tokens" ]; then
 	touch ${tmpder}
 	chmod 600 ${tmpder}
 	openssl rsa -inform PEM -outform DER -in "${p11softhsm_init_rsa_key}" -out ${tmpder}
-	pkcs11-tool --module "${p11_module}" --slot 0 --id 1 --label eduid --login --pin "${PKCS11PIN}" \
+	pkcs11-tool --module "${p11_module}" --id 1 --label eduid --login --pin "${PKCS11PIN}" \
 		    -y privkey -w ${tmpder}
 	rm ${tmpder}
     fi
