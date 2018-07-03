@@ -51,6 +51,10 @@ cat>>/etc/Chrystoki.conf<<EOF
 }
 EOF
 
+if [ -d /etc/Chrystoki.conf.d ]; then
+   cat /etc/Chrystoki.conf.d/*.conf >> /etc/Chrystoki.conf
+fi
+
 export PATH=/usr/safenet/lunaclient/bin:$PATH
 
 if [ ! -f "${SAFENET}/cert/client/${HOSTNAME}.pem" -o ! -f "${SAFENET}/cert/client/${HOSTNAME}Key.pem" ]; then
