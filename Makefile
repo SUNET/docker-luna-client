@@ -1,4 +1,4 @@
-VERSION=latest
+VERSION=6.2
 NAME=luna-client
 
 all: build push
