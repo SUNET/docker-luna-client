@@ -6,7 +6,7 @@ RUN apt-get -y upgrade
 COPY luna-client-${LUNA} /usr/src/luna-client
 WORKDIR /usr/src/luna-client
 RUN ./deb.sh
-RUN apt-get -y install opensc git-core python-dev build-essential libz-dev python-pip mercurial swig dnsutils
+RUN apt-get -y install opensc wget git-core python-dev build-essential libz-dev python-pip mercurial swig dnsutils
 RUN pip install --upgrade pykcs11 
 RUN pip install --upgrade ${PYELEVENSRC}
 RUN pip install gunicorn flask
