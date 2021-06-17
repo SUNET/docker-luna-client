@@ -1,2 +1,7 @@
 triggers:
     cron: @daily
+builders:
+    - script
+script:
+    - apt-get install gettext-base
+    - make dist
