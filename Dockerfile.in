@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM ubuntu:18.04
 MAINTAINER leifj@sunet.se
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get -q update
@@ -8,8 +8,7 @@ WORKDIR /usr/src/luna-client
 RUN ./deb.sh
 RUN apt-get -y install opensc git-core python-dev build-essential libz-dev python-pip mercurial swig dnsutils
 RUN pip install --upgrade pykcs11 
-#RUN pip install --upgrade hg+https://bitbucket.org/PyKCS11/pykcs11#egg=pykcs11
-RUN pip install --upgrade git+git://github.com/IdentityPython/pyeleven.git#egg=pyeleven
+RUN pip install --upgrade ${PYELEVENSRC}
 RUN pip install gunicorn flask
 WORKDIR /
 RUN rm -rf /usr/src/luna-client
