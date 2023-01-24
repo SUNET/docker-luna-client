@@ -20,6 +20,8 @@ Luna = {
 
 CardReader = {
   RemoteCommand = 1;
+  LunaG5Slots = 0;
+  LunaG7Slots = 0;
 }
 
 Misc = {
