@@ -60,6 +60,7 @@ fi
 export PATH=/usr/safenet/lunaclient/bin:$PATH
 
 if [ ! -f "${SAFENET}/cert/client/${HOSTNAME}.pem" -o ! -f "${SAFENET}/cert/client/${HOSTNAME}Key.pem" ]; then
+   mkdir -p "${SAFENET}/cert/client"
    vtl createCert -n ${HOSTNAME}
 fi
 
