@@ -6,8 +6,4 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "gunicorn>=23.0.0",
-    "pyeleven",
 ]
-
-[tool.uv.sources]
-pyeleven = { git = "https://github.com/IdentityPython/pyeleven.git", rev = "v0.0.2" }

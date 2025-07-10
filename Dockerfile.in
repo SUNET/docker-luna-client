@@ -9,6 +9,7 @@ RUN apt-get -y upgrade
 COPY luna-client-${LUNA} /usr/src/luna-client
 WORKDIR /usr/src/luna-client
 RUN apt-get -y install opensc wget git-core python3-dev build-essential libz-dev python3-pip mercurial swig dnsutils
+RUN uv add git+https://github.com/IdentityPython/pyeleven.git@v${PYELEVEN}
 RUN uv sync --frozen
 RUN ./deb.sh
 ENV PATH="/.venv/bin:$PATH"
