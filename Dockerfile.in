@@ -8,11 +8,11 @@ RUN apt-get -q update
 RUN apt-get -y upgrade
 COPY luna-client-${LUNA} /usr/src/luna-client
 WORKDIR /usr/src/luna-client
-RUN apt-get -y install opensc wget git-core python3-dev build-essential libz-dev python3-pip mercurial swig dnsutils
+RUN apt-get -y install opensc wget git-core python3-dev build-essential libz-dev python3-pip mercurial swig dnsutils curl alien
 RUN uv add git+https://github.com/IdentityPython/pyeleven.git@v${PYELEVEN}
 RUN uv sync --frozen
-RUN ./deb.sh
-ENV PATH="/.venv/bin:$PATH"
+RUN ./deb.sh ${TAR} ${URL} ${SHA}
+ENV PATH="/.venv/bin:/usr/safenet/lunaclient/bin:$PATH"
 WORKDIR /
 RUN rm -rf /usr/src/luna-client
 COPY entrypoint.sh /entrypoint.sh
