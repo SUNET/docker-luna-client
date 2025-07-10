@@ -15,8 +15,8 @@ Dockerfile: Dockerfile.in
 	env LUNA=$(LUNA) PYELEVENSRC=$(PYELEVENSRC) PYELEVEN=$(PYELEVEN) envsubst < $< > $@
 
 build: Dockerfile
-	docker build --no-cache=true -t $(NAME):$(VERSION) .
+	docker build --platform linux/amd64 --no-cache=true -t $(NAME):$(VERSION) .
 	docker tag $(NAME):$(VERSION) docker.sunet.se/$(NAME):$(VERSION)
 
 push:
-	docker push docker.sunet.se/$(NAME):$(VERSION)
+	echo docker push docker.sunet.se/$(NAME):$(VERSION)
