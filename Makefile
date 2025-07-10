@@ -23,4 +23,4 @@ build: Dockerfile
 	docker tag $(NAME):$(VERSION) docker.sunet.se/$(NAME):$(VERSION)
 
 push:
-	echo docker push docker.sunet.se/$(NAME):$(VERSION)
+	docker push docker.sunet.se/$(NAME):$(VERSION)
