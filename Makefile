@@ -7,7 +7,7 @@ VERSION=$(LUNA)-$(PYELEVEN)
 all: build push
 
 dist:
-	$(MAKE) LUNA=7.4 PYELEVENSRC=git+https://github.com/IdentityPython/pyeleven.git\#egg=pyeleven PYELEVEN="$(PYELEVEN)"
+	$(MAKE) LUNA=7.4
 
 .PHONY: Dockerfile
 
