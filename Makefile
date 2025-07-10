@@ -1,13 +1,13 @@
 LUNA=7.4
-PYELEVENSRC=git+https://github.com/IdentityPython/pyeleven.git\#egg=pyeleven
-PYELEVEN=0.0.1
+PYELEVENSRC=git+https://github.com/theseal/pyeleven.git\#egg=pyeleven
+PYELEVEN=0.0.2
 NAME=luna-client
 VERSION=$(LUNA)-$(PYELEVEN)
 
 all: build push
 
 dist:
-	$(MAKE) LUNA=7.4 PYELEVENSRC=git+https://github.com/IdentityPython/pyeleven.git\#egg=pyeleven PYELEVEN="$(PYELEVEN)"
+	$(MAKE) LUNA=7.4 PYELEVENSRC=git+https://github.com/theseal/pyeleven.git\#egg=pyeleven PYELEVEN="$(PYELEVEN)"
 
 .PHONY: Dockerfile
 
