@@ -1,4 +1,8 @@
 FROM ubuntu:22.04
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+COPY ./uv.lock ./pyproject.toml /
+
 MAINTAINER leifj@sunet.se
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get -q update
@@ -6,10 +10,9 @@ RUN apt-get -y upgrade
 COPY luna-client-${LUNA} /usr/src/luna-client
 WORKDIR /usr/src/luna-client
 RUN apt-get -y install opensc wget git-core python3-dev build-essential libz-dev python3-pip mercurial swig dnsutils
+RUN uv sync --frozen
 RUN ./deb.sh
-RUN pip install --upgrade pykcs11
-RUN pip install --upgrade ${PYELEVENSRC}
-RUN pip install gunicorn flask
+ENV PATH="/.venv/bin:$PATH"
 WORKDIR /
 RUN rm -rf /usr/src/luna-client
 COPY entrypoint.sh /entrypoint.sh
