@@ -5,3 +5,4 @@ builders:
 script:
     - apt-get install gettext-base
     - make dist
+    - make push
