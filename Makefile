@@ -7,7 +7,7 @@ PYELEVEN=0.0.2
 NAME=luna-client
 VERSION=$(LUNA)-$(PYELEVEN)
 
-all: build push
+all: build
 
 dist:
 	$(MAKE) LUNA=7.4
