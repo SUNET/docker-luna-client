@@ -1,0 +1,6 @@
+.git
+.gitignore
+.jenkins.yaml
+README.md
+Makefile
+Dockerfile.in
