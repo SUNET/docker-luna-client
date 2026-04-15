@@ -72,7 +72,7 @@ if [ "x${PYELEVEN_PORT}" = "x" ]; then
    PYELEVEN_PORT="8000"
 fi
 
-if [ "x${HTLC_ENABLED}" = "xyes" -o "x${HTLC_ENABLED}" = "x1" ]; then
+if [ "x${HTLC_ENABLED}" = "xyes" -o "x${HTLC_ENABLED}" = "x1" ] && [ -f /etc/init.d/htlc_service ]; then
    service htlc_service start
 fi
 

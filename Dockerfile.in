@@ -1,20 +1,37 @@
-FROM ubuntu:24.04
+# Build stage
+FROM ubuntu:24.04 AS builder
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 COPY ./uv.lock ./pyproject.toml /
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get -q update
-RUN apt-get -y upgrade
+
 COPY luna-client-${LUNA} /usr/src/luna-client
 WORKDIR /usr/src/luna-client
-RUN apt-get -y install opensc wget git-core python3-dev build-essential libz-dev python3-pip mercurial swig dnsutils curl alien
-RUN uv add git+https://github.com/IdentityPython/pyeleven.git@v${PYELEVEN}
-RUN uv sync --frozen
-RUN ./deb.sh ${TAR} ${URL} ${SHA}
+
+RUN apt-get -q update && \
+    apt-get -y --no-install-recommends install \
+        curl ca-certificates python3-dev build-essential zlib1g-dev git swig alien && \
+    uv add ${PYELEVENSRC}@v${PYELEVEN} && \
+    uv sync --frozen && \
+    ./deb.sh ${TAR} ${URL} ${SHA}
+
+# Runtime stage
+FROM ubuntu:24.04
+
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
+    apt-get -q update && \
+    apt-get -y upgrade && \
+    apt-get -y --no-install-recommends install \
+        opensc python3 zlib1g dnsutils && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /usr/safenet /usr/safenet
+COPY --from=builder /usr/lib/libCryptoki2* /usr/lib/
+COPY --from=builder /.venv /.venv
+
 ENV PATH="/.venv/bin:/usr/safenet/lunaclient/bin:$PATH"
-WORKDIR /
-RUN rm -rf /usr/src/luna-client
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod a+rx /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

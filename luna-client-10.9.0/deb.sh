@@ -23,7 +23,7 @@ fi
 
 tempdir=$(mktemp -d)
 
-curl --follow -O --output-dir "${tempdir}" "${baseurl}/${file}"
+curl -L -O --output-dir "${tempdir}" "${baseurl}/${file}"
 echo "${shasum} ${tempdir}/${file}" | sha256sum -c
 
 if [ -f /etc/Chrystoki.conf ]; then
