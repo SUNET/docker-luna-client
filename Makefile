@@ -23,4 +23,5 @@ build: Dockerfile
 	docker tag $(NAME):$(VERSION) docker.sunet.se/$(NAME):$(VERSION)
 
 push:
-	docker push docker.sunet.se/$(NAME):$(VERSION)
+	docker push docker.sunet.se/$(NAME):7.4-$(PYELEVEN)
+	docker push docker.sunet.se/$(NAME):10.9.0-$(PYELEVEN)
